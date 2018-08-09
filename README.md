@@ -74,9 +74,9 @@ I have included a Dockerfile in this repo as it made the most sense for me to te
 ```
 $ docker build pci -t .
 
-$ docker run -it --rm -v /mnt/plex/pingcap:/project/pci/data -m 1g --cpus="8" pci pci clean
+$ docker run -it --rm -v /path/to/large/hdd:/project/pci/data -m 1g --cpus="8" pci pci clean
 
-$ docker run -it --rm -v /mnt/plex/pingcap:/project/pci/data -m 1g --cpus="8" pci pci generate
+$ docker run -it --rm -v /path/to/large/hdd:/project/pci/data -m 1g --cpus="8" pci pci generate
 2018/08/09 07:10:18 generating data files...
 2018/08/09 07:10:18 writing 67,108,864 records
 2018/08/09 07:10:18 1% complete (105.74 MB/sec)
@@ -107,7 +107,7 @@ Note that above the docker options include limiting the memory to 1 GB and the C
 As shown in the previous section, the default configured setup generates two 1GB files in ~17 seconds, and processes these files to produce a join-summed csv file in just over 1 minute. This equates to a record/sec join and sum rate of just over 1 million records per second. The design of the code implies that this performance should be linear with the size of the files, and this also holds true for 10 GB sized files:
 
 ```
-$ docker run -it --rm -v /mnt/plex/pingcap:/project/pci/data -m 1g --cpus="8" -e FILE_SIZE=10737418240 pci pci generate
+$ docker run -it --rm -v /path/to/large/hdd:/project/pci/data -m 1g --cpus="8" -e FILE_SIZE=10737418240 pci pci generate
 2018/08/09 07:24:34 generating data files...
 2018/08/09 07:24:34 writing 671,088,640 records
 2018/08/09 07:24:35 1% complete (147.81 MB/sec)
@@ -119,7 +119,7 @@ $ docker run -it --rm -v /mnt/plex/pingcap:/project/pci/data -m 1g --cpus="8" -e
 2018/08/09 07:26:48 99% complete (76.67 MB/sec)
 2018/08/09 07:26:55 done in 2m20.438118016s (9,557,072 records/sec)
 
-$ docker run -it --rm -v /mnt/plex/pingcap:/project/pci/data -m 1g --cpus="8" -e FILE_SIZE=10737418240 pci pci process
+$ docker run -it --rm -v /path/to/large/hdd:/project/pci/data -m 1g --cpus="8" -e FILE_SIZE=10737418240 pci pci process
 2018/08/09 07:28:00 calculating user expenses...
 2018/08/09 07:28:01 1% complete (7,208,960 records processed)
 2018/08/09 07:28:08 2% complete (14,417,920 records processed)
