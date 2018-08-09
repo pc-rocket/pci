@@ -1,4 +1,4 @@
-*Background*
+***Background***
 
 **Goal**
 
@@ -20,7 +20,7 @@ File 2: a 1TB file with (user_id: uint64, item_id: uint64), which contains a lot
 
 Please write a program to calculate how much money each user has spent in the most efficient way possible and output the result to the disk.
 
-*Design*
+***Design***
 
 **Initial Thoughts**
 
@@ -34,7 +34,7 @@ The CLI program I wrote is written in Go, and I have used dep for dependency man
 
 The storage format is binary, to optimize for sequential reads and writes. The raw uint64 pair bytes are written in 16 byte records in each file, and read sequentially into memory in blocks, and written to the KV store. Once the files have been hashed, they are then joined, summed and written to a CSV file for legibility.
 
-*Usage*
+**Usage**
 
 The CLI program has two commands, and is configured using environment variables. All configuration parameters are specified in `common.go`. To generate the binary files run:
 
@@ -67,7 +67,7 @@ If you would like to re-run the processing, the data directory must be cleaned, 
 pci clean
 ```
 
-*Docker*
+**Docker**
 
 I have included a Dockerfile in this repo as it made the most sense for me to test the performance, and also will make it easy for any evaluators to run the cli as well. The typical command flow is as follows:
 
@@ -102,7 +102,7 @@ $ docker run -it --rm -v /path/to/large/hdd:/project/pci/data -m 1g --cpus="8" p
 
 Note that above the docker options include limiting the memory to 1 GB and the CPU cores to 8.
 
-*Performance*
+***Performance***
 
 As shown in the previous section, the default configured setup generates two 1GB files in ~17 seconds, and processes these files to produce a join-summed csv file in just over 1 minute. This equates to a record/sec join and sum rate of just over 1 million records per second. The design of the code implies that this performance should be linear with the size of the files, and this also holds true for 10 GB sized files:
 
